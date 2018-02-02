@@ -1,0 +1,34 @@
+html,body{
+	height: 100%;
+}
+p{
+	margin: 0;
+	padding: 0;
+}
+.footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	height: 33px;
+	background: url(../custom/../image/footer_bg.png) repeat-x;
+	background-size: 100% 100%;
+	cursor: pointer;
+}
+.footer p{
+	letter-spacing: 1px;
+	font-size: 12px;
+	text-align: center;
+	color: #fff;
+	line-height: 33px;
+}
+.footer a {
+	text-decoration: none;
+}
+.footer a:hover {
+  color: #BDAFA1;
+}
+.at-share-btn-elements{
+	display: none;
+}

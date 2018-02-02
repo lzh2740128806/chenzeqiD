@@ -1,0 +1,73 @@
+.custom{
+	width: 100%;
+}
+.custom label {
+	margin-right: 15px;
+}
+.custom input[type=text], .custom textarea {
+	width: 80%;
+}
+.custom #custom_name {
+	width: 51%;
+}
+.custom #description {
+	width: 90%;
+}
+.custom .url {
+	font-size: 0.8em;
+}
+@media screen and (max-width: 520px) {
+	.custom #custom_name {
+		width: 32%;
+	}
+	.custom .url {
+		font-size: 0.5em;
+	}
+}
+.custom .row {
+	margin: 12px 0 12px 0;
+	overflow: hidden;
+}
+.custom .row div {
+	float: left;
+}
+.custom .type-row .number {
+	width: 10%;
+}
+.custom .type-row .radio {
+	width: 30%;
+}
+.custom .type-row input[type=text], .custom .type-row input[type=file] {
+	width: 50%;
+}
+@media screen and (max-width: 520px) {
+	.custom .type-row .radio {
+		width: 20%;
+	}
+	.custom .type-row input[type=text], .custom .type-row input[type=file] {
+		width: 67%;
+	}
+}
+.custom #submit_btn {
+	margin-left: 30%;
+	margin-bottom: 50px;
+	width: 40%;
+}
+.custom .type-row .preview {
+	float:left ;
+	margin-left: 10%;
+}
+.custom .type-row .preview img {
+	max-width: 400px;
+}
+@media screen and (max-width: 520px) {
+	.custom .type-row .preview img {
+		max-width: 224px;
+	}
+}
+.custom .custom_name_msg {
+	display: none;
+	margin-left: 10%;
+	margin-top: 10px;
+	color:red;
+}

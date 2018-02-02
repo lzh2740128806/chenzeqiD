@@ -1,0 +1,48 @@
+.search #s {
+	width:69%;
+	height: 36px;
+	line-height: 36px;
+	font-size: 24px;
+}
+.search #search-btn {
+	width: 76px;
+}
+.list {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.list-row {
+	overflow: hidden;
+	margin-top:10px;
+}
+.list-row div {
+	float: left;
+}
+.list-row .name {
+	width: 23%;
+}
+.list-row .link {
+	max-width: 50%;
+	overflow: visible;
+}
+.list-row .link a {
+	font-size: 0.8em;
+}
+.list-row .visited {
+	float: right;
+	text-align: right;
+	width: 25%;
+}
+@media screen and (max-width: 520px) {
+	.list-row .link a {
+		font-size: 0.9em;
+	}
+	.list-row .link {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.list-row .link .domain {
+		display: none;
+	}
+}

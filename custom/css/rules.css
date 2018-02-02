@@ -1,0 +1,16 @@
+.rules{
+	width: 100%;
+}
+.rules img {
+	width: 60%;
+	margin-left: 20%;
+}
+.rules p {
+	text-indent: 2em;
+}
+.rules a {
+	text-decoration: none;
+}
+.rules a:hover {
+	color: #BDAFA1;
+}
