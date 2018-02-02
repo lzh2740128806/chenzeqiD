@@ -1,0 +1,73 @@
+﻿.tile.tile-2 .tile-inner {background-image: url(../upload/db3c48aae4494f98.png)}
+@media screen and (max-width: 520px) {.tile.tile-2 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+}
+.tile.tile-4 .tile-inner {background-image: url(../upload/62f6117fa73f4ee0.png)}
+@media screen and (max-width: 520px) {.tile.tile-4 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-8 .tile-inner {background-image: url(../upload/7602ba03ae3dd7e8.png)}
+@media screen and (max-width: 520px) {.tile.tile-8 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-16 .tile-inner {background-image: url(../upload/beaf7a9f2bb64ac2.png)}
+@media screen and (max-width: 520px) {.tile.tile-16 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-32 .tile-inner {background-image: url(../upload/6481da858eb36dea.png)}
+@media screen and (max-width: 520px) {.tile.tile-32 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-64 .tile-inner {background-image: url(../upload/69da0202a2297055.png)}
+@media screen and (max-width: 520px) {.tile.tile-64 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-128 .tile-inner {background-image: url(../upload/418d82128456aa1a.png)}
+@media screen and (max-width: 520px) {.tile.tile-128 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-256 .tile-inner {background-image: url(../upload/0233949e89db5bba.png)}
+@media screen and (max-width: 520px) {.tile.tile-256 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-512 .tile-inner {background-image: url(../upload/35dad1e4c392224c.png)}
+@media screen and (max-width: 520px) {.tile.tile-512 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-1024 .tile-inner {background-image: url(../upload/5f9c0f26c61ace2c.png)}
+@media screen and (max-width: 520px) {.tile.tile-1024 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-2048 .tile-inner {background-image: url(../upload/d26c03cb38ec1a4b.png)}
+@media screen and (max-width: 520px) {.tile.tile-2048 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+.tile.tile-4096 .tile-inner {background-image: url(../upload/4096.png)}
+@media screen and (max-width: 520px) {.tile.tile-4096 .tile-inner {
+    background-size: 63px 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+}}

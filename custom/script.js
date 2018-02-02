@@ -1,0 +1,1 @@
+﻿;(function(window){window.custom_4096={"name":"itsgmu","title":"\u79ef\u76ee","description":"","text":[],"image":{"2":true,"4":true,"8":true,"16":true,"32":true,"64":true,"128":true,"256":true,"512":true,"1024":true,"2048":true,"4096":true}};})(window);
