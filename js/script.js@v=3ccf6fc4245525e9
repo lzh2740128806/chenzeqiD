@@ -1,0 +1,221 @@
+;(function(window, document, $) {
+	$(document).ready(function(){
+		$(".type-row input[type=radio]").click(function(){
+			var number = $(this).parent().parent().data("number");
+			var value = $(this).val();
+			if (value === "text") {
+				$("#content-" + number).show();
+				$("#file-" + number).hide();
+			} else if (value === "image") {
+				$("#content-" + number).hide();
+				$("#file-" + number).show();
+			}
+		});
+
+		$(".type-row input[type=file]").change(function(){
+			var number = $(this).parent().data("number");
+			var file = $(this)[0].files[0];
+			var filter = /^(image\/jpeg|image\/png|image\/webp)$/i;
+		    if (!filter.test(file.type)) {
+		        alert($._('只支持jpg、jpeg、png格式的图片'));
+		        $(this).val("");
+		        return false;
+		    }
+		    if (file.size > 10 * 1024 * 1024) {
+		        alert($._('文件太大，请选择一张稍小点的图片（小于10MB）'));
+		        $(this).val("");
+		        return;
+		    }
+			$("#file-" + number).hide();
+			var radio = $(this).parent().find(".radio").hide();
+		    var preview_id = "preview" + (new Date() - 0);
+		    $(this).parent().append("<div class='preview' id='" + preview_id + "'><img /><input id='upload' type='button' value='" + $._("上传") + "' /><input id='cancel' type='button' value='" + $._("取消") + "' /></div>");
+		    var pos = {};
+		    var data_url;
+			function updateInfo(e) {
+				pos.x1 = e.x;
+				pos.x2 = e.x2;
+				pos.y1 = e.y;
+				pos.y2 = e.y2;
+			}
+			function clearInfo(e) {
+				pos = {};
+			}
+			// Create variables (in this scope) to hold the Jcrop API and image size
+		    var jcrop_api, boundx, boundy;
+			$("#" + preview_id + " #upload").click(function(){
+				if (!pos.x1 && !pos.x2 && !pos.y3 && !pos.y4) {
+					alert($._("请在图片上拖动以剪裁"));
+					return false;
+				}
+				var post_data = {};
+				post_data.pos = {};
+				post_data.pos.x1 = pos.x1;
+				post_data.pos.x2 = pos.x2;
+				post_data.pos.y1 = pos.y1;
+				post_data.pos.y2 = pos.y2;
+				if ($("#" + preview_id + " img").width() != $("#" + preview_id + " img")[0].width) {
+					var real_width = $(".preview img")[0].width;
+					var real_height = $(".preview img")[0].height;
+					var view_width = $(".preview img").width();
+					post_data.pos.x1 = Math.min(parseInt(post_data.pos.x1 * real_width / view_width), real_width);
+					post_data.pos.x2 = Math.min(parseInt(post_data.pos.x2 * real_width / view_width), real_width);
+					post_data.pos.y1 = Math.min(parseInt(post_data.pos.y1 * real_width / view_width), real_height);
+					post_data.pos.y2 = Math.min(parseInt(post_data.pos.y2 * real_width / view_width), real_height);
+				}
+				post_data.data = data_url;
+				$.post("upload/default.htm", {data: JSON.stringify(post_data)}, function(data){
+					var data = typeof data === 'string' ? JSON.parse(data) : data;
+					console.log(data);
+					if (!data.success) {
+						alert(data.error);
+					} else {
+						jcrop_api.destroy();
+						$("#" + preview_id).remove();
+						$("#file-" + number).remove();
+						radio.show();
+						radio.find("input").attr("disabled", "disabled");
+						radio.parent().append("<a href='../upload/" + data.file_name + "' target='_blank'>" + data.file_name + "</a>")
+						$("#content-" + number).val(data.file_name);
+					}
+				});
+			});
+			$("#" + preview_id + " #cancel").click(function(){
+				jcrop_api.destroy();
+				$("#" + preview_id).remove();
+				$("#file-" + number).show();
+				radio.show();
+				$("#file-" + number).val("");
+			});
+		    var oImage = $("#" + preview_id + " img")[0];
+			var oReader = new FileReader();
+		    oReader.onload = function(e) {
+		        // e.target.result contains the DataURL which we can use as a source of the image
+		        oImage.src = e.target.result;
+		        data_url = e.target.result;
+		        oImage.onload = function () { // onload event handler
+
+		            // destroy Jcrop if it is existed
+		            if (typeof jcrop_api != 'undefined') {
+		                jcrop_api.destroy();
+		            }
+
+		            // initialize Jcrop
+		            $("#" + preview_id + " img").Jcrop({
+		                minSize: [32, 32], // min crop size
+		                aspectRatio : 1, // keep aspect ratio 1:1
+		                bgFade: true, // use fade effect
+		                bgOpacity: .3, // fade opacity
+		                onChange: updateInfo,
+		                onSelect: updateInfo,
+		                onRelease: clearInfo
+		            }, function(){
+		                // use the Jcrop API to get the real image size
+		                var bounds = this.getBounds();
+		                boundx = bounds[0];
+		                boundy = bounds[1];
+		                // Store the Jcrop API in the jcrop_api variable
+		                jcrop_api = this;
+		                //$(".jcrop-holder").css("background-image", "url(image/alpha.png)");
+		            });
+		        };
+		    };
+		    // read selected file as DataURL
+		    oReader.readAsDataURL(file);
+		});
+
+		function no_mb_strlen(str) {
+			return (escape(str).length - str.length) / 5 + str.length;
+		}
+
+		$(".custom #submit_btn").click(function(){
+			$("#title").val($.trim($("#title").val()));
+			if ($("#title").val().length === 0) {
+				$("#title").focus();
+				return alert($._("请输入标题"));
+			} else if (no_mb_strlen($("#title").val()) > 12) {
+				$("#title").focus();
+				return alert($._("标题不能超过6个字"));
+			}
+			var type_rows = $(".type-row");
+			for (var i = 1; i < type_rows.length; i++) {
+				var type_row = $(type_rows[i]);
+				var number = type_row.data("number");
+				var type = type_row.find("input[type=radio]:checked").val();
+				if (type == "text") {
+					$("#content-" + number).val($.trim($("#content-" + number).val()));
+					if ($("#content-" + number).val().length == 0) {
+						$("#content-" + number).focus();
+						return alert($._("请填写") + number + $._("对应的文字"));
+					} else if ($("#content-" + number).val().length > 10) {
+						$("#content-" + number).focus();
+						return alert($._("文字不能超过10个字"));
+					}
+				} else if (type == "image") {
+					if ($("#file-" + number).length > 0) {
+						$("#file-" + number).focus();
+						return alert($._("请上传") + number + $._("对应的图片"));
+					}
+				} else {
+					return alert($._("不要乱改哦"));
+				}
+			}
+			check_custom_name(function(success) {
+				if (success) {
+					$(".radio input").removeAttr("disabled");
+					$(".custom form").submit();
+				}
+			});
+		});
+
+		function check_custom_name(callback) {
+			$("#custom_name").val($.trim($("#custom_name").val()));
+			var custom_name = $("#custom_name").val();
+			if (custom_name.length == 0) {
+				$(".custom_name_msg").show();
+				$("#custom_name").focus();
+				alert($._("链接不能为空"));
+				return callback(false);
+			}
+			if (custom_name.length <= 3) {
+				$(".custom_name_msg").show();
+				$("#custom_name").focus();
+				alert($._("链接长度至少为4"));
+				return callback(false);
+			} else if (custom_name.length > 256) {
+				$(".custom_name_msg").show();
+				$("#custom_name").focus();
+				alert($._("链接长度至多为256"));
+				return callback(false);
+			}
+			if (!custom_name.match(/^[0-9a-zA-Z_]{3,256}$/)) {
+				$(".custom_name_msg").show();
+				$("#custom_name").focus();
+				alert($._("链接不合法"));
+				return callback(false);
+			}
+			var post_data = {};
+			post_data.custom_name = custom_name;
+			$.post("check_custom_name/default.htm", {data: JSON.stringify(post_data)}, function(data){
+				var data = JSON.parse(data);
+				if (!data.success) {
+					alert(data.error);
+				} else {
+					if (data.check) {
+						$(".custom_name_msg").hide();
+						return callback(true);
+					} else {
+						$("#custom_name").focus();
+						$(".custom_name_msg").show();
+						return callback(false);
+					}
+				}
+			});
+		}
+		$("#custom_name").blur(function(){
+			check_custom_name(function(){
+
+			});
+		})
+	});
+})(window, document, jQuery);
