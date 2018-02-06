@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>专属照片</title>
+    <link href="style/main.css" rel="stylesheet" type="text/css">
+    <link href="custom/style.css" rel="stylesheet" type="text/css">
+    <link href="custom/css/footer.css" rel="stylesheet" type="text/css">
+    <script src="custom/script.js"></script>
+    <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+    <script src="custom/js/text_rem.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <style>
+        body{
+            height: auto;
+        }
+        #content1 {
+            display: block;
+        }
+        .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            display: none;
+            background-color: #fff;
+        }
+        #gesture-area {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 99;
+            overflow: hidden;
+        }
+        .wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 98;
+            overflow: hidden;
+        }
+        article, aside, footer, header, hgroup, nav, section, audio, canvas, video {
+            display: block;
+        }
+        #inputwd {
+            position: absolute;
+            width: 38%;
+            height: 18px;
+            bottom: 162px;
+            left: 52%;
+            border: 1px solid #333;
+            border-radius: 10px;
+            line-height: 29px;
+            font-family: '微软雅黑';
+            font-size: 11px;
+            text-align: center;
+            color: #333;
+        }
+        #upload {
+            position: absolute;
+            top: 78%;
+            left: 64px;
+            margin: 0;
+        }
+        .upimg {
+            position: absolute;
+            top: 65%;
+            left: 65px;
+            z-index: 1;
+            margin: 0;
+        }
+        #inputimg {
+            position: absolute;
+            top: 65%;
+            height: 40px;
+            left: 17%;
+            margin: 0;
+            width: 67%;
+            opacity: 0;
+            border-radius: 23px;
+            z-index: 999999;
+        }
+        #content2{
+            display: none;
+        }
+        #close{
+            width: 50%;
+            height: 27px;
+            background-color: black;
+            margin: auto;
+            text-align: center;
+            border-radius: 4px;
+            color: #fff;
+            margin-top: 48px;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div class="content" id="content1">
+    <div class="exclusive_wrap">
+        <div class="exclusive_Photo">
+            <div class="exclusive_header">
+                <h2>生成专属照片</h2>
+            </div>
+            <div class="inner">
+                <!--<img src="custom/image/xas.png" alt=""/>-->
+                <div id="gesture-area" class="wrapper"></div><!--手势区域 gesture-area-->
+                <canvas id="demoCanvas" width="650" height="575" style="margin-top: 47px;padding-left: 6px;width: 100%;height: 100%;"></canvas><!--图片合成区 demoCanvas-->
+            </div>
+        </div>
+        <div class="innere" style="height: 20%;background-color: red;">
+            <p class="button upimg"><span class="span_b"><img src="custom/image/exclusive_Photo.b.png" alt=""/></span><a>选择照片</a></p>
+
+            <input type="file" name="photo" id="inputimg" class="button"><!--上传图片到画布按钮 inputimg-->
+            <p id="upload"><span class="span_a"><img src="custom/image/exclusive_Photo_a.png" alt=""/></span><a>生成头像</a></p>
+        </div>
+        <div class="footer">
+            <p>立即下载积目app<a href="http://www.itsgmu.com"></a></p>
+        </div>
+    </div>
+</div>
+<!-- 第二页 生成结果页 -->
+<div class="content" id="content2">
+
+    <div class="heading">
+        <h2 class="heading_text">生成头像</h2>
+    </div>
+    <div class="head_portrait">
+        <div class="head_portrait_box">
+            <div class="inner">
+                <div class="imgwrapper"><img id="show" src="" width="100%"></div>
+                <div class="close" id="close"><p>继续生成</p></div>
+            </div>
+        </div>
+    </div>
+    <div class="Generated_avatar_text">
+        <p>你在后宫如懿传里扮演的是周迅饰演的乌拉那拉-如懿，你是最受宠的！</p>
+    </div>
+    <div class="Generated_avatar_footer">
+        <div class="Generated_footer_one">
+            <p>长按图片扫描二维码</p>
+            <p>邀请您的好友一起参与游戏</p>
+        </div>
+        <div class="Generated_footer_one">
+            <img src="custom/image/erweima.png" alt="">
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script src="js/exif.js"></script>
+<script src="js/interact.min.js"></script>
+<script src="js/easeljs-0.8.2.min.js"></script>
+<script src="js/js.js"></script>
+<script>
+    function holePageToImg(){
+        html2canvas($('body'),{
+            onrendered: function(canvas) {
+                convertCanvasToImage(canvas);
+            }
+        });
+
+        function convertCanvasToImage(canvas) {
+            var image = new Image();
+            image.style.width = '100%';
+            image.src = canvas.toDataURL("image/png");
+            document.body.innerHTML = '';
+            document.body.appendChild(image);
+            return image;
+        };
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
